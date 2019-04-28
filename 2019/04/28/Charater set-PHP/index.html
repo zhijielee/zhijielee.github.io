@@ -9,11 +9,11 @@
 <meta name="keywords" content="PHP，字符集&amp;字符编码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字符集&amp;字符编码以及PHP中的一些转码方法">
-<meta property="og:url" content="https://www.zhijie.li/2019/04/26/Charater set-PHP/index.html">
+<meta property="og:url" content="https://www.zhijie.li/2019/04/28/Charater set-PHP/index.html">
 <meta property="og:site_name" content="Die antwort">
 <meta property="og:description" content="字符集&amp;字符编码的类型，以及PHP怎么应对乱码">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-26T15:00:49.025Z">
+<meta property="og:updated_time" content="2019-04-28T04:14:28.399Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="字符集&amp;字符编码以及PHP中的一些转码方法">
 <meta name="twitter:description" content="字符集&amp;字符编码的类型，以及PHP怎么应对乱码">
@@ -78,7 +78,7 @@
 </nav>
     <div id="main"><section class="article">
   <h2 class="title">字符集&amp;字符编码以及PHP中的一些转码方法</h2>
-  <p class="sub">Apr 26, 2019</p>
+  <p class="sub">Apr 28, 2019</p>
   <article class="content">
     <p>在重写一些老的项目的时候，有可能会遇到这种情况</p>
 <p>¾ÍÒµÖ¸µ¼ÖÐÐÄ2010Äêº®¼Ù·Å¼ÙÍ¨Öª</p>
@@ -186,14 +186,15 @@
 <p>\$str = mb_convert_encoding($str, “EUC-JP”, “auto”);</p>
 <h3 id="iconv和mb-convert-encoding的区别"><a href="#iconv和mb-convert-encoding的区别" class="headerlink" title="iconv和mb_convert_encoding的区别"></a>iconv和mb_convert_encoding的区别</h3><p>1、iconv速度快，自然优先选择，但是他有个缺点，如果遇到自己不能转换的字符，就从那里截断。这就导致转码中内容被无故截断。</p>
 <p>2、mb_convert_encoding函数效率比较低，但是他遇到无法转换的内容不会截断，这很大程度保留了内容的完整性。但是我发现比如内容有空格，转换出来的内容就有？符号，还是不够完美。</p>
+<iframe src="https://raw.githack.com/zhijielee/donate-page/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
 
   </article>
   <footer class="f-cf">
     
-      <a href="/2019/04/27/ubuntu+nginx+PHP7.1+mysql/" class="link f-fl">⟵ubuntu上nginx+PHP7.1+mysql的安装及配置</a>
+      <a href="/2019/04/28/vagrant/" class="link f-fl">⟵vagrant的安装&amp;简单的配置</a>
     
     
-      <a href="/2019/04/26/vagrant/" class="link f-fr">vagrant的安装&amp;简单的配置⟶</a>
+      <a href="/2019/04/28/ubuntu+laravel/" class="link f-fr">ubuntu上安装composer和laravel⟶</a>
     
   </footer>
 </section></div>
