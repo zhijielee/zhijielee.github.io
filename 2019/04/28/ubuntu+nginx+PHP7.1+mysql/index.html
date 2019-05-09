@@ -3,20 +3,20 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>ubuntu上nginx+PHP7.1+mysql的安装及配置 | Die antwort</title>
+  <title>ubuntu16上nginx+PHP7.1+mysql的安装及配置 | Die antwort</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="ubuntu16.04上安装nginx+PHP7.1+mysql 初始工作——换源换源就是更新软件的下载源，ubuntu如果没有换源的话，默认源是欧洲的，下载速度很慢，还有可能报一些404的错误，所以要换成国内的下载源，原来用的是清华的源，但是清华源在某大的时候可能会被墙，换成了较好的163源。 ubuntu的下载源在/etc/apt下的source.list中。  把里面的内容备份后，换成163">
 <meta name="keywords" content="PHP,MySQL,nginx">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ubuntu上nginx+PHP7.1+mysql的安装及配置">
+<meta property="og:title" content="ubuntu16上nginx+PHP7.1+mysql的安装及配置">
 <meta property="og:url" content="https://www.zhijie.li/2019/04/28/ubuntu+nginx+PHP7.1+mysql/index.html">
 <meta property="og:site_name" content="Die antwort">
 <meta property="og:description" content="ubuntu16.04上安装nginx+PHP7.1+mysql 初始工作——换源换源就是更新软件的下载源，ubuntu如果没有换源的话，默认源是欧洲的，下载速度很慢，还有可能报一些404的错误，所以要换成国内的下载源，原来用的是清华的源，但是清华源在某大的时候可能会被墙，换成了较好的163源。 ubuntu的下载源在/etc/apt下的source.list中。  把里面的内容备份后，换成163">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://www.zhijie.li/uploads/photos/php_mysql.png">
-<meta property="og:updated_time" content="2019-04-28T04:52:14.029Z">
+<meta property="og:updated_time" content="2019-05-09T07:24:04.981Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu上nginx+PHP7.1+mysql的安装及配置">
+<meta name="twitter:title" content="ubuntu16上nginx+PHP7.1+mysql的安装及配置">
 <meta name="twitter:description" content="ubuntu16.04上安装nginx+PHP7.1+mysql 初始工作——换源换源就是更新软件的下载源，ubuntu如果没有换源的话，默认源是欧洲的，下载速度很慢，还有可能报一些404的错误，所以要换成国内的下载源，原来用的是清华的源，但是清华源在某大的时候可能会被墙，换成了较好的163源。 ubuntu的下载源在/etc/apt下的source.list中。  把里面的内容备份后，换成163">
 <meta name="twitter:image" content="https://www.zhijie.li/uploads/photos/php_mysql.png">
   
@@ -79,7 +79,7 @@
   </div>
 </nav>
     <div id="main"><section class="article">
-  <h2 class="title">ubuntu上nginx+PHP7.1+mysql的安装及配置</h2>
+  <h2 class="title">ubuntu16上nginx+PHP7.1+mysql的安装及配置</h2>
   <p class="sub">Apr 28, 2019</p>
   <article class="content">
     <p>ubuntu16.04上安装nginx+PHP7.1+mysql</p>
@@ -115,16 +115,19 @@
 <p>将 <code>;cgi.fix_pathinfo=1</code> 修改为 <code>cgi.fix_pathinfo=0</code>（去掉注释） <code>/</code>  用于搜索</p>
 <p>重启php7.1-fpm</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service php7.1-fpm restart</span><br></pre></td></tr></table></figure>
-<h3 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h3><p>Nginx的服务器配置文件在<br><code>/etc/nginx/sites-available</code>的<code>default</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/nginx/sites-available/default</span><br></pre></td></tr></table></figure>
-<p>做以下修改</p>
-<p><img src="/uploads/Linux/nginx_default.png" alt></p>
-<p>然后重启 nginx</p>
+<h3 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h3><p>Nginx的服务器配置文件在<br><code>/etc/nginx/sites-available</code>下</p>
+<p>新增配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/nginx/sites-available/phpinfo</span><br></pre></td></tr></table></figure>
+<p>内容为</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">801</span>;<span class="comment">#项目监听端口</span></span><br><span class="line">        <span class="attribute">listen</span> [::]:<span class="number">801</span>;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">root</span> /var/www; <span class="comment">#所要运行项目的根目录</span></span><br><span class="line"></span><br><span class="line">        <span class="attribute">index</span> index.html index.htm index.nginx-debian.html index.php;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">server_name</span> _;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">location</span> / &#123;</span><br><span class="line">                <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.php<span class="variable">$is_args</span><span class="variable">$query_string</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">location</span> <span class="regexp">~ \.php$</span> &#123;</span><br><span class="line">                <span class="attribute">include</span> snippets/fastcgi-php.conf;</span><br><span class="line">                <span class="attribute">fastcgi_pass</span> unix:/run/php/php7.2-fpm.sock;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后将其软链到<code>/etc/nginx/sites-enabled</code>下</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo</span> ln -s /etc/nginx/sites-available/phpinfo  /etc/nginx/sites-enabled/</span><br></pre></td></tr></table></figure>
+<p>重启 nginx</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl reload nginx</span><br></pre></td></tr></table></figure>
 <p>在<code>/var/www</code>下增加test.php文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim test.php</span><br></pre></td></tr></table></figure></p>
 <p>输入</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">echo</span> phpinfo();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<p>访问<code>192.168.33.10/test.php</code>可以看到</p>
+<p>访问<code>192.168.33.10:801/test.php</code>可以看到</p>
 <p><img src="/uploads/Linux/phpinfo.png" alt></p>
 <p>已经配置成功啦！！！</p>
 <iframe src="https://raw.githack.com/zhijielee/donate-page/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
