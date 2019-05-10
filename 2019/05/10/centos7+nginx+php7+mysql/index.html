@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>centos7上nginx+PHP7.2的安装及配置 | Die antwort</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="centos7上nginx+PHP7.2的安装和一些配置（php和nginx）,以及centos的yum踩坑记录 修改yum源国内使用centos默认的yum下载源非常慢，将其换为国内的阿里源  安装wget 1sudo yum install wget  备份原始的更新源 1cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-">
+<meta name="keywords" content="PHP,nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7上nginx+PHP7.2的安装及配置">
+<meta property="og:url" content="https://www.zhijie.li/2019/05/10/centos7+nginx+php7+mysql/index.html">
+<meta property="og:site_name" content="Die antwort">
+<meta property="og:description" content="centos7上nginx+PHP7.2的安装和一些配置（php和nginx）,以及centos的yum踩坑记录 修改yum源国内使用centos默认的yum下载源非常慢，将其换为国内的阿里源  安装wget 1sudo yum install wget  备份原始的更新源 1cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.zhijie.li/uploads/photos/php_mysql.png">
+<meta property="og:updated_time" content="2019-05-10T06:51:39.433Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="centos7上nginx+PHP7.2的安装及配置">
+<meta name="twitter:description" content="centos7上nginx+PHP7.2的安装和一些配置（php和nginx）,以及centos的yum踩坑记录 修改yum源国内使用centos默认的yum下载源非常慢，将其换为国内的阿里源  安装wget 1sudo yum install wget  备份原始的更新源 1cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-">
+<meta name="twitter:image" content="https://www.zhijie.li/uploads/photos/php_mysql.png">
+  
+  <link rel="stylesheet" href="/css/index.css">
+</head>
+</html>
+<body style="
+
+
+  background-color: #eff0f6
+
+">
+  <div id="container">
+    <nav id="nav">
+  <header class="header">
+    <a href="/" class="title">Die antwort</a>
+  </header>
+  <div class="ctnWrap">
+    <div class="icons">
+      
+        
+          
+            <a href="https://github.com/zhijielee" target="_blank" class="nav-icn iconfont icon-github"></a>
+          
+        
+          
+            <a href="https://twitter.com/zhijie1998" target="_blank" class="nav-icn iconfont icon-twitter"></a>
+          
+        
+          
+            <a href="https://www.instagram.com/zhijie_li1998" target="_blank" class="nav-icn iconfont icon-instagram"></a>
+          
+        
+          
+            <a href="https://www.zhihu.com/people/die-antwort" target="_blank" class="nav-icn iconfont icon-zhihu"></a>
+          
+        
+      
+    </div>
+    <div class="menu">
+      
+        
+            <a href="/" class="nav-menu ">HOME</a>
+          
+        
+            <a href="/archives" class="nav-menu ">ARCHIVE</a>
+          
+        
+            <a href="/tags" class="nav-menu ">TAGS</a>
+          
+        
+            <a href="/categories" class="nav-menu ">CATEGORIES</a>
+          
+        
+            <a href="/about" class="nav-menu ">ABOUT</a>
+          
+        
+      
+    </div>
+  </div>
+</nav>
+    <div id="main"><section class="article">
+  <h2 class="title">centos7上nginx+PHP7.2的安装及配置</h2>
+  <p class="sub">May 10, 2019</p>
+  <article class="content">
+    <p>centos7上nginx+PHP7.2的安装和一些配置（php和nginx）,以及centos的yum踩坑记录</p>
+<h2 id="修改yum源"><a href="#修改yum源" class="headerlink" title="修改yum源"></a>修改yum源</h2><p>国内使用centos默认的yum下载源非常慢，将其换为国内的阿里源</p>
+<ul>
+<li><p>安装wget</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo</span> yum install wget</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>备份原始的更新源</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">cp</span> /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载并设置更新源为阿里源</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">wget</span> -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>清理yum缓存</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yum</span> clean all</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建yum缓存</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yum</span> makecache</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h3><p>在安装过程中会可能因本机dns解析遇到以下问题</p>
+<p><img src="/uploads/Linux/yum_problem.png" alt="sources.list"></p>
+<p><strong>解决方案</strong></p>
+<ul>
+<li>在<code>/etc/resolv.conf</code>中增加<code>nameserver 8.8.8.8</code></li>
+<li>重新执行 <code>yum makecache</code></li>
+</ul>
+<h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><ul>
+<li><p>添加nginx源</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">rpm</span> -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装nginx</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yum</span> install nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动nginx</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">systemctl</span> start nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问ip(本地127.0.0.1)，查看是否成功</p>
+<p><img src="/uploads/Linux/nginx.png" alt="nginx"></p>
+</li>
+</ul>
+<p>ok！</p>
+<h2 id="安装PHP"><a href="#安装PHP" class="headerlink" title="安装PHP"></a>安装PHP</h2><ul>
+<li><p>添加PHP源</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yum</span> install epel-release</span><br><span class="line">rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装php 和 php-fpm</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">yum</span> install php72w php72w-fpm</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h2><ul>
+<li><p>nginx的配置文件位于<code>/etc/nginx/conf.d</code>下</p>
+<p>修改默认配置文件<code>default.conf</code>内容为</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  localhost;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">root</span>   /usr/share/nginx/html;<span class="comment">#项目根目录</span></span><br><span class="line">        <span class="attribute">index</span>  index.html index.htm index.php;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="attribute">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  /50x.html;</span><br><span class="line">    <span class="attribute">location</span> = /50x.html &#123;</span><br><span class="line">        <span class="attribute">root</span>   /usr/share/nginx/html;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> <span class="regexp">~ \.php$</span> &#123;</span><br><span class="line">        <span class="attribute">root</span>           html;</span><br><span class="line">        <span class="attribute">fastcgi_pass</span>   <span class="number">127.0.0.1:9000</span>;</span><br><span class="line">        <span class="attribute">fastcgi_index</span>  index.php;</span><br><span class="line">        <span class="attribute">fastcgi_param</span>  SCRIPT_FILENAME  /usr/share/nginx/html<span class="variable">$fastcgi_script_name</span>;<span class="comment">#根据项目根目录修改</span></span><br><span class="line">        <span class="attribute">include</span>        fastcgi_params;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启nginx</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">systemctl</span> restart nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动php-fpm</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">service</span> start php-fpm</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>nginx</code>解析目录下添加php文件<code>test.php</code>内容如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">echo</span> phpinfo();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问访问<code>ip(本地127.0.0.1)/test.php</code> 页面如下</p>
+<p><img src="/uploads/Linux/phpinfo_centos.png" alt></p>
+</li>
+</ul>
+<p>大功告成！！！</p>
+<iframe src="https://raw.githack.com/zhijielee/donate-page/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
+
+
+  </article>
+  <footer class="f-cf">
+    
+    
+      <a href="/2019/04/28/ubuntu+laravel/" class="link f-fr">ubuntu上安装composer和laravel⟶</a>
+    
+  </footer>
+</section></div>
+    <footer id="footer" class="f-cf">
+  i@zhijie.li
+  
+    
+      
+        · <a href="https://github.com/zhijielee" target="_blank" class="nav-icn">Github</a>
+      
+    
+      
+        · <a href="https://twitter.com/zhijie1998" target="_blank" class="nav-icn">Twitter</a>
+      
+    
+      
+        · <a href="https://www.instagram.com/zhijie_li1998" target="_blank" class="nav-icn">Instagram</a>
+      
+    
+      
+        · <a href="https://www.zhihu.com/people/die-antwort" target="_blank" class="nav-icn">Zhihu</a>
+      
+    
+  
+  <span class="copyright">All rights reserved @Clover Tuan</span>
+</footer>
+  </div>
+</body>
+</html>
