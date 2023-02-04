@@ -476,14 +476,6 @@ deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe
       </tags>
   </entry>
   <entry>
-    <title>Vultr上的Shadowsocks的搭建及配置</title>
-    <url>/2023/02/04/vultr+ssr/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>Shadowsocks</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vagrant的安装&amp;简单的配置</title>
     <url>/2023/02/04/vagrant/</url>
     <content><![CDATA[<p>一般服务器上的运行环境都是Linux，如果开发者项目在本地 （windows）上运行正常的话，放到服务器上会出现一些bug，这是开发环境和生成环境不一致而造成的。这就需要一个和服务器运行环境一致的开发环境。当时打算做个双系统，在做之前组长推荐了vagrant虚拟机，发现内存占用并不是很大，而且还可以在开发的时候用Windows上的软件，非常的方便。</p>
@@ -551,6 +543,14 @@ exit;
       </categories>
       <tags>
         <tag>Vagrant</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vultr上的Shadowsocks的搭建及配置</title>
+    <url>/2023/02/04/vultr+ssr/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>Shadowsocks</tag>
       </tags>
   </entry>
 </search>
