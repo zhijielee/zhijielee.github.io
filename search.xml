@@ -148,188 +148,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>ubuntu上安装composer和laravel</title>
-    <url>/2023/02/04/ubuntu+laravel/</url>
-    <content><![CDATA[<p>ubuntu上安装PHP框架laravel。</p>
-<h2 id="准备">准备</h2>
-<h3 id="服务器要求">服务器要求</h3>
-<p>laravel框架对系统的要求可以用Laravel Homestead 虚拟机满足，如果不使用Homestead作为开发环境需要服务器符合以下要求：</p>
-<blockquote>
-<p>PHP &gt;= 7.0.0</p>
-<p>PHP OpenSSL 扩展</p>
-<p>PHP PDO 扩展</p>
-<p>PHP Mbstring扩展</p>
-<p>PHP Tokenizer 扩展</p>
-<p>PHP XML 扩展</p>
-</blockquote>
-<h3 id="安装PHP扩展">安装PHP扩展</h3>
-<p><img src="/uploads/laravel/php_laravel.png" alt=""></p>
-<h3 id="安装配置composer">安装配置composer</h3>
-<h4 id="安装composer">安装composer</h4>
-<p>依次输入下面命令安装composer</p>
-<pre><code>php -r &quot;copy('https://install.phpcomposer.com/installer','composer-setup.php');&quot;
-</code></pre>
-<p>下载安装脚本 <code> － composer-setup.php －</code> 到当前目录。</p>
-<pre><code>php composer-setup.php执行安装过程
-</code></pre>
-<pre><code>php -r &quot;unlink('composer-setup.php');&quot;删除安装脚本
-</code></pre>
-<p>全局安装</p>
-<pre><code>sudo mv composer.phar /usr/local/bin/composer
-</code></pre>
-<p>安装完以后查看composer版本 <strong>composer -v</strong></p>
-<p><img src="/uploads/laravel/composer.png" alt="composer"></p>
-<p>说明安装成功了。</p>
-<h4 id="配置composer">配置composer</h4>
-<p>修改composer的全局配置文件</p>
-<pre><code>composer config -g repo.packagist composer https://packagist.phpcomposer.com
-</code></pre>
-<p>然后执行 <code>composer selfupdate</code></p>
-<h2 id="安装配置laravel">安装配置laravel</h2>
-<p>安装laravel</p>
-<pre><code>composer global require &quot;laravel/installer=~1.1&quot;
-</code></pre>
-<p>配置laravel<br>
-使用下面语句添加环境变量</p>
-<pre><code>export PATH=&quot;~/.config/composer/vendor/bin:$PATH&quot;
-</code></pre>
-<p>并填加在 <code>/etc/bash.bashrc</code> 执行 <code>source ~/.bashrc</code> 让环境变量立即生效</p>
-<p>然后就去 <code>/var/www</code>新建一个laravel项目</p>
-<pre><code>laravel new laravel
-</code></pre>
-<p>在laravel new的时候会报几个文件没有权限，直接给777权限就OK了。</p>
-<p>修改laravel目录权限</p>
-<pre><code>sudo chown -R :www-data /var/www/laravel
-sudo chmod -R 775 /var/www/laravel/storage
-</code></pre>
-<p>然后laravel就弄好了，可以开始表演了。</p>
-<iframe src="https://raw.githack.com/zhijielee/donate-page/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
-]]></content>
-      <categories>
-        <category>Environment</category>
-      </categories>
-      <tags>
-        <tag>Composer</tag>
-        <tag>Laravel</tag>
-        <tag>PHP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ubuntu16上nginx+PHP7.1+mysql的安装及配置</title>
-    <url>/2023/02/04/ubuntu+nginx+PHP7.1+mysql/</url>
-    <content><![CDATA[<p>ubuntu16.04上安装nginx+PHP7.1+mysql</p>
-<h2 id="初始工作——换源">初始工作——换源</h2>
-<p>换源就是更新软件的下载源，ubuntu如果没有换源的话，默认源是欧洲的，下载速度很慢，还有可能报一些404的错误，所以要换成国内的下载源，原来用的是清华的源，但是清华源在某大的时候可能会被墙，换成了较好的163源。</p>
-<p>ubuntu的下载源在/etc/apt下的source.list中。</p>
-<p><img src="/uploads/Linux/vim_sources.list.png" alt="sources.list"></p>
-<p>把里面的内容备份后，换成163的源。</p>
-<p>下面是ubuntu 16.04的163源</p>
-<pre><code>deb http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
-</code></pre>
-<p>保存，退出后，执行下面的命令更新。</p>
-<p><img src="/uploads/Linux/update_apt.png" alt="update_apt"></p>
-<h2 id="安装nginx">安装nginx</h2>
-<p>apt源更新好以后，就可以安装 nginx了</p>
-<p>sudo apt-get install nginx</p>
-<p><img src="/uploads/Linux/install_nginx.png" alt="install_nginx"></p>
-<p>安装好以后可以 nginx -v 看一下nginx的版本</p>
-<p>这时候启动nginx 并设置开机启动</p>
-<p><img src="/uploads/Linux/start_nginx.png" alt="nginx_start"></p>
-<p>然后访问ip(本地127.0.0.1)，可以看到welcome to nginx</p>
-<p><img src="/uploads/Linux/nginx.png" alt="nginx"></p>
-<h2 id="安装PHP7-1">安装PHP7.1</h2>
-<p>按以下命令安装PHP</p>
-<p><img src="/uploads/Linux/php_install.png" alt="php_install"></p>
-<p>安装后php -v 查看自己是否安装成</p>
-<p><img src="/uploads/Linux/php-v.png" alt=""></p>
-<p>这样PHP7.1就安装好了</p>
-<h2 id="安装mysql">安装mysql</h2>
-<p>然后安装mysql</p>
-<p><img src="/uploads/Linux/mysql.png" alt=""></p>
-<p>安装过程中会让输入root密码，切记啊！</p>
-<p><img src="/uploads/Linux/mysql_install.png" alt=""></p>
-<p>登入mysql<br>
-然后使用  <code>Ctrl + D</code>    退出mysql</p>
-<h2 id="nginx和PHP的配置">nginx和PHP的配置</h2>
-<h3 id="配置PHP">配置PHP</h3>
-<p>安装php-fpm</p>
-<pre><code>sudo apt install php7.1-fpm
-</code></pre>
-<p>修改 <code>php.ini</code> 文件</p>
-<pre><code>sudo  vim /etc/php/7.1/fpm/php.ini
-</code></pre>
-<p>将 <code>;cgi.fix_pathinfo=1</code> 修改为 <code>cgi.fix_pathinfo=0</code>（去掉注释） <code>/</code>  用于搜索</p>
-<p>重启php7.1-fpm</p>
-<pre><code>sudo service php7.1-fpm restart
-</code></pre>
-<h3 id="配置nginx">配置nginx</h3>
-<p>Nginx的服务器配置文件在<br>
-<code>/etc/nginx/sites-available</code>下</p>
-<p>新增配置文件</p>
-<pre><code>sudo vim /etc/nginx/sites-available/phpinfo
-</code></pre>
-<p>内容为</p>
-<pre><code class="language-nginx">server &#123;
-        listen 801;#项目监听端口
-        listen [::]:801;
-
-        root /var/www; #所要运行项目的根目录
-
-        index index.html index.htm index.nginx-debian.html index.php;
-
-        server_name _;
-
-        location / &#123;
-                try_files $uri $uri/ /index.php$is_args$query_string;
-        &#125;
-
-        location ~ \.php$ &#123;
-                include snippets/fastcgi-php.conf;
-                fastcgi_pass unix:/run/php/php7.1-fpm.sock;
-
-        &#125;
-
-&#125;
-
-</code></pre>
-<p>然后将其软链到<code>/etc/nginx/sites-enabled</code>下</p>
-<pre><code class="language-nginx">sudo ln -s /etc/nginx/sites-available/phpinfo  /etc/nginx/sites-enabled/
-</code></pre>
-<p>重启 nginx</p>
-<pre><code>sudo systemctl reload nginx
-</code></pre>
-<p>在<code>/var/www</code>下增加test.php文件</p>
-<pre><code>sudo vim test.php
-</code></pre>
-<p>输入</p>
-<pre><code class="language-php">&lt;?php
-    echo phpinfo();
-?&gt;
-</code></pre>
-<p>访问<code>192.168.33.10:801/test.php</code>可以看到</p>
-<p><img src="/uploads/Linux/phpinfo.png" alt=""></p>
-<p>已经配置成功啦！！！</p>
-<iframe src="https://raw.githack.com/zhijielee/donate-page/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
-]]></content>
-      <categories>
-        <category>Environment</category>
-      </categories>
-      <tags>
-        <tag>PHP</tag>
-        <tag>MySQL</tag>
-        <tag>nginx</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>centos7上nginx+PHP7.2的安装及配置</title>
     <url>/2023/02/04/centos7+nginx+php7/</url>
     <content><![CDATA[<p>centos7上nginx+PHP7.2的安装和一些配置（php和nginx）,以及centos的yum踩坑记录</p>
@@ -476,6 +294,196 @@ rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
       </tags>
   </entry>
   <entry>
+    <title>ubuntu上安装composer和laravel</title>
+    <url>/2023/02/04/ubuntu+laravel/</url>
+    <content><![CDATA[<p>ubuntu上安装PHP框架laravel。</p>
+<h2 id="准备">准备</h2>
+<h3 id="服务器要求">服务器要求</h3>
+<p>laravel框架对系统的要求可以用Laravel Homestead 虚拟机满足，如果不使用Homestead作为开发环境需要服务器符合以下要求：</p>
+<blockquote>
+<p>PHP &gt;= 7.0.0</p>
+<p>PHP OpenSSL 扩展</p>
+<p>PHP PDO 扩展</p>
+<p>PHP Mbstring扩展</p>
+<p>PHP Tokenizer 扩展</p>
+<p>PHP XML 扩展</p>
+</blockquote>
+<h3 id="安装PHP扩展">安装PHP扩展</h3>
+<p><img src="/uploads/laravel/php_laravel.png" alt=""></p>
+<h3 id="安装配置composer">安装配置composer</h3>
+<h4 id="安装composer">安装composer</h4>
+<p>依次输入下面命令安装composer</p>
+<pre><code>php -r &quot;copy('https://install.phpcomposer.com/installer','composer-setup.php');&quot;
+</code></pre>
+<p>下载安装脚本 <code> － composer-setup.php －</code> 到当前目录。</p>
+<pre><code>php composer-setup.php执行安装过程
+</code></pre>
+<pre><code>php -r &quot;unlink('composer-setup.php');&quot;删除安装脚本
+</code></pre>
+<p>全局安装</p>
+<pre><code>sudo mv composer.phar /usr/local/bin/composer
+</code></pre>
+<p>安装完以后查看composer版本 <strong>composer -v</strong></p>
+<p><img src="/uploads/laravel/composer.png" alt="composer"></p>
+<p>说明安装成功了。</p>
+<h4 id="配置composer">配置composer</h4>
+<p>修改composer的全局配置文件</p>
+<pre><code>composer config -g repo.packagist composer https://packagist.phpcomposer.com
+</code></pre>
+<p>然后执行 <code>composer selfupdate</code></p>
+<h2 id="安装配置laravel">安装配置laravel</h2>
+<p>安装laravel</p>
+<pre><code>composer global require &quot;laravel/installer=~1.1&quot;
+</code></pre>
+<p>配置laravel<br>
+使用下面语句添加环境变量</p>
+<pre><code>export PATH=&quot;~/.config/composer/vendor/bin:$PATH&quot;
+</code></pre>
+<p>并填加在 <code>/etc/bash.bashrc</code> 执行 <code>source ~/.bashrc</code> 让环境变量立即生效</p>
+<p>然后就去 <code>/var/www</code>新建一个laravel项目</p>
+<pre><code>laravel new laravel
+</code></pre>
+<p>在laravel new的时候会报几个文件没有权限，直接给777权限就OK了。</p>
+<p>修改laravel目录权限</p>
+<pre><code>sudo chown -R :www-data /var/www/laravel
+sudo chmod -R 775 /var/www/laravel/storage
+</code></pre>
+<p>然后laravel就弄好了，可以开始表演了。</p>
+<iframe src="https://raw.githack.com/zhijielee/donate-page/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
+]]></content>
+      <categories>
+        <category>Environment</category>
+      </categories>
+      <tags>
+        <tag>PHP</tag>
+        <tag>Composer</tag>
+        <tag>Laravel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ubuntu16上nginx+PHP7.1+mysql的安装及配置</title>
+    <url>/2023/02/04/ubuntu+nginx+PHP7.1+mysql/</url>
+    <content><![CDATA[<p>ubuntu16.04上安装nginx+PHP7.1+mysql</p>
+<h2 id="初始工作——换源">初始工作——换源</h2>
+<p>换源就是更新软件的下载源，ubuntu如果没有换源的话，默认源是欧洲的，下载速度很慢，还有可能报一些404的错误，所以要换成国内的下载源，原来用的是清华的源，但是清华源在某大的时候可能会被墙，换成了较好的163源。</p>
+<p>ubuntu的下载源在/etc/apt下的source.list中。</p>
+<p><img src="/uploads/Linux/vim_sources.list.png" alt="sources.list"></p>
+<p>把里面的内容备份后，换成163的源。</p>
+<p>下面是ubuntu 16.04的163源</p>
+<pre><code>deb http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+</code></pre>
+<p>保存，退出后，执行下面的命令更新。</p>
+<p><img src="/uploads/Linux/update_apt.png" alt="update_apt"></p>
+<h2 id="安装nginx">安装nginx</h2>
+<p>apt源更新好以后，就可以安装 nginx了</p>
+<p>sudo apt-get install nginx</p>
+<p><img src="/uploads/Linux/install_nginx.png" alt="install_nginx"></p>
+<p>安装好以后可以 nginx -v 看一下nginx的版本</p>
+<p>这时候启动nginx 并设置开机启动</p>
+<p><img src="/uploads/Linux/start_nginx.png" alt="nginx_start"></p>
+<p>然后访问ip(本地127.0.0.1)，可以看到welcome to nginx</p>
+<p><img src="/uploads/Linux/nginx.png" alt="nginx"></p>
+<h2 id="安装PHP7-1">安装PHP7.1</h2>
+<p>按以下命令安装PHP</p>
+<p><img src="/uploads/Linux/php_install.png" alt="php_install"></p>
+<p>安装后php -v 查看自己是否安装成</p>
+<p><img src="/uploads/Linux/php-v.png" alt=""></p>
+<p>这样PHP7.1就安装好了</p>
+<h2 id="安装mysql">安装mysql</h2>
+<p>然后安装mysql</p>
+<p><img src="/uploads/Linux/mysql.png" alt=""></p>
+<p>安装过程中会让输入root密码，切记啊！</p>
+<p><img src="/uploads/Linux/mysql_install.png" alt=""></p>
+<p>登入mysql<br>
+然后使用  <code>Ctrl + D</code>    退出mysql</p>
+<h2 id="nginx和PHP的配置">nginx和PHP的配置</h2>
+<h3 id="配置PHP">配置PHP</h3>
+<p>安装php-fpm</p>
+<pre><code>sudo apt install php7.1-fpm
+</code></pre>
+<p>修改 <code>php.ini</code> 文件</p>
+<pre><code>sudo  vim /etc/php/7.1/fpm/php.ini
+</code></pre>
+<p>将 <code>;cgi.fix_pathinfo=1</code> 修改为 <code>cgi.fix_pathinfo=0</code>（去掉注释） <code>/</code>  用于搜索</p>
+<p>重启php7.1-fpm</p>
+<pre><code>sudo service php7.1-fpm restart
+</code></pre>
+<h3 id="配置nginx">配置nginx</h3>
+<p>Nginx的服务器配置文件在<br>
+<code>/etc/nginx/sites-available</code>下</p>
+<p>新增配置文件</p>
+<pre><code>sudo vim /etc/nginx/sites-available/phpinfo
+</code></pre>
+<p>内容为</p>
+<pre><code class="language-nginx">server &#123;
+        listen 801;#项目监听端口
+        listen [::]:801;
+
+        root /var/www; #所要运行项目的根目录
+
+        index index.html index.htm index.nginx-debian.html index.php;
+
+        server_name _;
+
+        location / &#123;
+                try_files $uri $uri/ /index.php$is_args$query_string;
+        &#125;
+
+        location ~ \.php$ &#123;
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+
+        &#125;
+
+&#125;
+
+</code></pre>
+<p>然后将其软链到<code>/etc/nginx/sites-enabled</code>下</p>
+<pre><code class="language-nginx">sudo ln -s /etc/nginx/sites-available/phpinfo  /etc/nginx/sites-enabled/
+</code></pre>
+<p>重启 nginx</p>
+<pre><code>sudo systemctl reload nginx
+</code></pre>
+<p>在<code>/var/www</code>下增加test.php文件</p>
+<pre><code>sudo vim test.php
+</code></pre>
+<p>输入</p>
+<pre><code class="language-php">&lt;?php
+    echo phpinfo();
+?&gt;
+</code></pre>
+<p>访问<code>192.168.33.10:801/test.php</code>可以看到</p>
+<p><img src="/uploads/Linux/phpinfo.png" alt=""></p>
+<p>已经配置成功啦！！！</p>
+<iframe src="https://raw.githack.com/zhijielee/donate-page/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
+]]></content>
+      <categories>
+        <category>Environment</category>
+      </categories>
+      <tags>
+        <tag>PHP</tag>
+        <tag>nginx</tag>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vultr上的Shadowsocks的搭建及配置</title>
+    <url>/2023/02/04/vultr+ssr/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>Shadowsocks</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vagrant的安装&amp;简单的配置</title>
     <url>/2023/02/04/vagrant/</url>
     <content><![CDATA[<p>一般服务器上的运行环境都是Linux，如果开发者项目在本地 （windows）上运行正常的话，放到服务器上会出现一些bug，这是开发环境和生成环境不一致而造成的。这就需要一个和服务器运行环境一致的开发环境。当时打算做个双系统，在做之前组长推荐了vagrant虚拟机，发现内存占用并不是很大，而且还可以在开发的时候用Windows上的软件，非常的方便。</p>
@@ -543,14 +551,6 @@ exit;
       </categories>
       <tags>
         <tag>Vagrant</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vultr上的Shadowsocks的搭建及配置</title>
-    <url>/2023/02/04/vultr+ssr/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>Shadowsocks</tag>
       </tags>
   </entry>
 </search>
