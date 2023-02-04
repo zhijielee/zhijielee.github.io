@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>centos7上nginx+PHP7.2的安装及配置 | Die antwort</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta name="description" content="centos7上nginx+PHP7.2的安装和一些配置（php和nginx）,以及centos的yum踩坑记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7上nginx+PHP7.2的安装及配置">
+<meta property="og:url" content="https://www.zhijie.li/2023/02/04/centos7+nginx+php7/index.html">
+<meta property="og:site_name" content="Die antwort">
+<meta property="og:description" content="centos7上nginx+PHP7.2的安装和一些配置（php和nginx）,以及centos的yum踩坑记录">
+<meta property="og:locale">
+<meta property="og:image" content="https://www.zhijie.li/uploads/photos/php_mysql.png">
+<meta property="article:published_time" content="2023-02-04T08:22:40.036Z">
+<meta property="article:modified_time" content="2023-02-04T09:01:18.036Z">
+<meta property="article:author" content="Die antwort">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.zhijie.li/uploads/photos/php_mysql.png"> 
+    
+    <link rel="icon" href="/source/images/favicon.ico" />
+    
+    <link
+      rel="stylesheet"
+      href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css"
+    />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        document.querySelectorAll("pre code").forEach((block) => {
+          hljs.highlightBlock(block);
+        });
+      });
+    </script>
+    
+<link rel="stylesheet" href="/css/index.css">
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+</html>
+
+<body style="
+
+
+  background-color: #eff0f6
+
+">
+  <div id="container">
+    <nav id="nav">
+  <header class="header">
+    <a href="/" class="title">Die antwort</a>
+  </header>
+  <div class="ctnWrap">
+    <div class="icons">
+        
+      <a
+        href="https://github.com/zhijielee"
+        target="_blank"
+        class="nav-icn iconfont icon-github"
+      ></a>
+        
+      <a
+        href="https://twitter.com/zhijie1998"
+        target="_blank"
+        class="nav-icn iconfont icon-twitter"
+      ></a>
+        
+      <a
+        href="https://www.instagram.com/zhijie_li1998"
+        target="_blank"
+        class="nav-icn iconfont icon-instagram"
+      ></a>
+        
+      <a
+        href="https://www.zhihu.com/people/die-antwort"
+        target="_blank"
+        class="nav-icn iconfont icon-zhihu"
+      ></a>
+        
+    </div>
+  
+    <div class="menu">
+       
+      <a
+        href="/"
+        class="nav-menu "
+        >HOME
+      </a>
+       
+      <a
+        href="/archives"
+        class="nav-menu "
+        >ARCHIVE
+      </a>
+       
+      <a
+        href="/tags"
+        class="nav-menu "
+        >TAG
+      </a>
+       
+      <a
+        href="/categories"
+        class="nav-menu "
+        >CATEGORIES
+      </a>
+       
+      <a
+        href="/about"
+        class="nav-menu "
+        >ABOUT
+      </a>
+       
+      <a
+        href="/search"
+        class="nav-menu "
+        >SEARCH
+      </a>
+        
+      
+    </div>
+  </div>
+</nav>
+    <div id="main"><section class="article">
+  <h2 class="title">centos7上nginx+PHP7.2的安装及配置</h2>
+  <p class="sub">Feb 4, 2023</p>
+  <article class="content"><p>centos7上nginx+PHP7.2的安装和一些配置（php和nginx）,以及centos的yum踩坑记录</p>
+<h2 id="修改yum源">修改yum源</h2>
+<p>国内使用centos默认的yum下载源非常慢，将其换为国内的阿里源-部署测试</p>
+<ul>
+<li>
+<p>安装wget</p>
+<pre><code class="language-nginx">sudo yum install wget
+</code></pre>
+</li>
+<li>
+<p>备份原始的更新源</p>
+<pre><code class="language-nginx">cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+</code></pre>
+</li>
+<li>
+<p>下载并设置更新源为阿里源</p>
+</li>
+</ul>
+<pre><code class="language-nginx">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+</code></pre>
+<ul>
+<li>
+<p>清理yum缓存</p>
+<pre><code class="language-nginx">yum clean all
+</code></pre>
+</li>
+<li>
+<p>创建yum缓存</p>
+<pre><code class="language-nginx">yum makecache
+</code></pre>
+</li>
+</ul>
+<h3 id="问题记录">问题记录</h3>
+<p>在安装过程中会可能因本机dns解析遇到以下问题</p>
+<p><img src="/uploads/Linux/yum_problem.png" alt="sources.list"></p>
+<p><strong>解决方案</strong></p>
+<ul>
+<li>在<code>/etc/resolv.conf</code>中增加<code>nameserver 8.8.8.8</code></li>
+<li>重新执行 <code>yum makecache</code></li>
+</ul>
+<h2 id="安装nginx">安装nginx</h2>
+<ul>
+<li>
+<p>添加nginx源</p>
+<pre><code class="language-nginx">rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+</code></pre>
+</li>
+<li>
+<p>安装nginx</p>
+<pre><code class="language-nginx">yum install nginx
+</code></pre>
+</li>
+<li>
+<p>启动nginx</p>
+<pre><code class="language-nginx">systemctl start nginx
+</code></pre>
+</li>
+<li>
+<p>访问ip(本地127.0.0.1)，查看是否成功</p>
+<p><img src="/uploads/Linux/nginx.png" alt="nginx"></p>
+</li>
+</ul>
+<p>ok！</p>
+<h2 id="安装PHP">安装PHP</h2>
+<ul>
+<li>
+<p>添加PHP源</p>
+<pre><code class="language-nginx">yum install epel-release
+rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+</code></pre>
+</li>
+<li>
+<p>安装php 和 php-fpm</p>
+<pre><code class="language-nginx">yum install php72w php72w-fpm
+</code></pre>
+</li>
+</ul>
+<h2 id="nginx配置">nginx配置</h2>
+<ul>
+<li>
+<p>nginx的配置文件位于<code>/etc/nginx/conf.d</code>下</p>
+<p>修改默认配置文件<code>default.conf</code>内容为</p>
+<pre><code class="language-nginx">server &#123;
+    listen       80;
+    server_name  localhost;
+
+
+    location / &#123;
+        root   /usr/share/nginx/html;#项目根目录
+        index  index.html index.htm index.php;
+    &#125;
+
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html &#123;
+        root   /usr/share/nginx/html;
+    &#125;
+
+
+    location ~ \.php$ &#123;
+        root           html;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  /usr/share/nginx/html$fastcgi_script_name;#根据项目根目录修改
+        include        fastcgi_params;
+    &#125;
+    
+&#125;
+</code></pre>
+</li>
+<li>
+<p>重启nginx</p>
+<pre><code class="language-nginx">systemctl restart nginx
+</code></pre>
+</li>
+<li>
+<p>启动php-fpm</p>
+<pre><code class="language-nginx">service start php-fpm
+</code></pre>
+</li>
+<li>
+<p>在<code>nginx</code>解析目录下添加php文件<code>test.php</code>内容如下</p>
+<pre><code class="language-php">&lt;?php
+    echo phpinfo();
+?&gt;
+</code></pre>
+</li>
+<li>
+<p>访问访问<code>ip(本地127.0.0.1)/test.php</code> 页面如下</p>
+<p><img src="/uploads/Linux/phpinfo_centos.png" alt=""></p>
+</li>
+</ul>
+<p>大功告成！！！</p>
+<iframe src="https://raw.githack.com/zhijielee/donate-page/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
+</article>
+  <footer class="f-cf">
+    
+    <a href="/2023/02/04/Charater%20set-PHP/" class="link f-fl">
+      字符集&amp;字符编码以及PHP中的一些转码方法</a
+    >
+     
+  </footer>
+</section>
+</div>
+    <footer id="footer" class="f-footer">
+  <span class="social">
+    i@zhijie.li 
+     
+       
+        
+          · <a href="https://github.com/zhijielee" target="_blank" class="nav-icn">GitHub</a>
+         
+       
+        
+          · <a href="https://twitter.com/zhijie1998" target="_blank" class="nav-icn">Twitter</a>
+         
+       
+        
+          · <a href="https://www.instagram.com/zhijie_li1998" target="_blank" class="nav-icn">Instagram</a>
+         
+       
+        
+          · <a href="https://www.zhihu.com/people/die-antwort" target="_blank" class="nav-icn">Zhihu</a>
+         
+       
+    
+  </span>
+  <span class="copyright">All rights reserved @Die antwort</span>
+</footer>
+
+  </div>
+</body>
+</html>
