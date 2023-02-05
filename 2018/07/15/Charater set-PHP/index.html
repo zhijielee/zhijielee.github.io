@@ -11,12 +11,12 @@
     <meta name="description" content="字符集&amp;字符编码的类型，以及PHP怎么应对乱码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字符集&amp;字符编码以及PHP中的一些转码方法">
-<meta property="og:url" content="https://www.zhijie.li/2023/02/04/Charater%20set-PHP/index.html">
+<meta property="og:url" content="https://www.zhijie.li/2018/07/15/Charater%20set-PHP/index.html">
 <meta property="og:site_name" content="Die antwort">
 <meta property="og:description" content="字符集&amp;字符编码的类型，以及PHP怎么应对乱码">
 <meta property="og:locale">
-<meta property="article:published_time" content="2023-02-04T08:22:40.049Z">
-<meta property="article:modified_time" content="2023-02-04T08:22:40.050Z">
+<meta property="article:published_time" content="2018-07-15T12:19:32.000Z">
+<meta property="article:modified_time" content="2023-02-05T10:25:15.108Z">
 <meta property="article:author" content="Die antwort">
 <meta property="article:tag" content="Backend Die antwort&#39;s Blog life writing">
 <meta name="twitter:card" content="summary"> 
@@ -125,7 +125,7 @@
 </nav>
     <div id="main"><section class="article">
   <h2 class="title">字符集&amp;字符编码以及PHP中的一些转码方法</h2>
-  <p class="sub">Feb 4, 2023</p>
+  <p class="sub">Jul 15, 2018</p>
   <article class="content"><p>在重写一些老的项目的时候，有可能会遇到这种情况</p>
 <p>¾ÍÒµÖ¸µ¼ÖÐÐÄ2010Äêº®¼Ù·Å¼ÙÍ¨Öª</p>
 <p>�����˵�λ�������</p>
@@ -267,18 +267,14 @@
 <h3 id="iconv和mb-convert-encoding的区别">iconv和mb_convert_encoding的区别</h3>
 <p>1、iconv速度快，自然优先选择，但是他有个缺点，如果遇到自己不能转换的字符，就从那里截断。这就导致转码中内容被无故截断。</p>
 <p>2、mb_convert_encoding函数效率比较低，但是他遇到无法转换的内容不会截断，这很大程度保留了内容的完整性。但是我发现比如内容有空格，转换出来的内容就有？符号，还是不够完美。</p>
-<iframe src="https://raw.githack.com/zhijielee/donate-page/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
+<iframe src="https://raw.githack.com/zhijielee/donate/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
 </article>
   <footer class="f-cf">
     
-    <a href="/2023/02/04/ubuntu+laravel/" class="link f-fl">
-      ubuntu上安装composer和laravel</a
+    <a href="/2018/08/15/vagrant/" class="link f-fl">
+      vagrant的安装&amp;简单的配置</a
     >
      
-    <a href="/2023/02/04/centos7+nginx+php7/" class="link f-fr"
-      >centos7上nginx+PHP7.2的安装及配置
-    </a>
-    
   </footer>
 </section>
 </div>
