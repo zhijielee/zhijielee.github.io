@@ -16,7 +16,7 @@
 <meta property="og:description" content="字符集&amp;字符编码的类型，以及PHP怎么应对乱码">
 <meta property="og:locale">
 <meta property="article:published_time" content="2018-07-15T12:19:32.000Z">
-<meta property="article:modified_time" content="2023-02-05T10:25:15.108Z">
+<meta property="article:modified_time" content="2023-02-06T03:06:14.442Z">
 <meta property="article:author" content="Die antwort">
 <meta property="article:tag" content="Backend Die antwort&#39;s Blog life writing">
 <meta name="twitter:card" content="summary"> 
@@ -111,12 +111,6 @@
         href="/about"
         class="nav-menu "
         >ABOUT
-      </a>
-       
-      <a
-        href="/search"
-        class="nav-menu "
-        >SEARCH
       </a>
         
       
@@ -215,8 +209,6 @@
 <h4 id="参数">参数</h4>
 <ul>
 <li>
-<ul>
-<li>
 <p><code>in_charset</code></p>
 <p>输入的字符集。</p>
 </li>
@@ -230,11 +222,7 @@
 <p>要转换的字符串。</p>
 </li>
 </ul>
-</li>
-<li>
 <h4 id="返回值">返回值</h4>
-</li>
-</ul>
 <p>返回转换后的字符串， 或者在失败时返回 <strong>FALSE</strong>。</p>
 <h4 id="用法">用法</h4>
 <p>$text = iconv(“UTF-8”, “ISO-8859-1//TRANSLIT”, $text);</p>
@@ -267,7 +255,7 @@
 <h3 id="iconv和mb-convert-encoding的区别">iconv和mb_convert_encoding的区别</h3>
 <p>1、iconv速度快，自然优先选择，但是他有个缺点，如果遇到自己不能转换的字符，就从那里截断。这就导致转码中内容被无故截断。</p>
 <p>2、mb_convert_encoding函数效率比较低，但是他遇到无法转换的内容不会截断，这很大程度保留了内容的完整性。但是我发现比如内容有空格，转换出来的内容就有？符号，还是不够完美。</p>
-<iframe src="https://raw.githack.com/zhijielee/donate/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
+<iframe src="/donate-page/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
 </article>
   <footer class="f-cf">
     

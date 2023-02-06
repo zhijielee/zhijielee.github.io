@@ -17,7 +17,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://www.zhijie.li/uploads/photos/php_mysql.png">
 <meta property="article:published_time" content="2018-09-20T12:19:32.000Z">
-<meta property="article:modified_time" content="2023-02-05T10:23:57.122Z">
+<meta property="article:modified_time" content="2023-02-06T03:01:13.570Z">
 <meta property="article:author" content="Die antwort">
 <meta property="article:tag" content="PHP">
 <meta property="article:tag" content="nginx">
@@ -115,12 +115,6 @@
         class="nav-menu "
         >ABOUT
       </a>
-       
-      <a
-        href="/search"
-        class="nav-menu "
-        >SEARCH
-      </a>
         
       
     </div>
@@ -145,11 +139,9 @@
 </li>
 <li>
 <p>下载并设置更新源为阿里源</p>
-</li>
-</ul>
 <pre><code class="language-nginx">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 </code></pre>
-<ul>
+</li>
 <li>
 <p>清理yum缓存</p>
 <pre><code class="language-nginx">yum clean all
@@ -215,18 +207,15 @@ rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
     listen       80;
     server_name  localhost;
 
-
     location / &#123;
         root   /usr/share/nginx/html;#项目根目录
         index  index.html index.htm index.php;
     &#125;
 
-
     error_page   500 502 503 504  /50x.html;
     location = /50x.html &#123;
         root   /usr/share/nginx/html;
     &#125;
-
 
     location ~ \.php$ &#123;
         root           html;
@@ -235,7 +224,7 @@ rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
         fastcgi_param  SCRIPT_FILENAME  /usr/share/nginx/html$fastcgi_script_name;#根据项目根目录修改
         include        fastcgi_params;
     &#125;
-    
+
 &#125;
 </code></pre>
 </li>
@@ -257,12 +246,12 @@ rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 </code></pre>
 </li>
 <li>
-<p>访问访问<code>ip(本地127.0.0.1)/test.php</code> 页面如下</p>
+<p>访问<code>ip(本地127.0.0.1)/test.php</code> 页面如下</p>
 <p><img src="/uploads/Linux/phpinfo_centos.png" alt=""></p>
 </li>
 </ul>
 <p>大功告成！！！</p>
-<iframe src="https://raw.githack.com/zhijielee/donate-page/master/simple/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
+<iframe src="/donate-page/index.html" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
 </article>
   <footer class="f-cf">
     
